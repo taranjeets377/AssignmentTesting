@@ -1,0 +1,33 @@
+<div class="container" style="float: right">
+	<h3> Generate Secret Codes </h3>
+	<%= form_tag('/secret_codes/create') do %>
+		<%= select_tag "code_count", options_for_select([ 1, 10, 20, 50, 100 ], '10') %>
+		<%= submit_tag("Generate", name: 'generate_secretcode[submit]') %>
+	<% end %>
+</div>
+<h2>SecretCodes</h2>
+<% if @secret_codes.present? %>
+	<% count = 0 %>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>S.No.</th>
+	     		<th>Associated Email</th>
+			    <th>Code</th>
+	  		</tr>
+		</thead>
+
+		<tbody>
+			<% @secret_codes.each do |scode| %>
+				<% count += 1 %>
+	    		<tr class=<%= scode.user_id.present? ? 'danger' : 'success' %>>
+	      			<td><%= count %></td>
+	      			<td><%= scode.user_id.present? ? scode.user.email : "AVAILABLE" %></td>
+	      			<td><%= scode.code %></td>
+	    		</tr>
+	  		<% end %>
+		</tbody>
+	</table>
+<% else %>	
+	<h4>No Secret codes present</h4>
+<% end %>

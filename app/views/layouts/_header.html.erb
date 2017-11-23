@@ -1,0 +1,16 @@
+<!-- HEADER FILE -->
+<header class="navbar navbar-fixed-top navbar-inverse">
+  <div class="container">
+    <%= link_to "assignment app", '#', id: "logo" %>
+    <nav>
+      <ul class="nav navbar-nav navbar-right">
+        <li><%= link_to "Home", root_path %></li>
+        <% if current_user.present? %>
+          <li><%= link_to 'Edit', edit_user_registration_path(current_user) %></li>
+          <li><%= link_to 'Manage Secrect Codes', secret_codes_index_path if verify_role_admin %></li>
+          <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
+        <% end %>  
+      </ul>
+    </nav>
+  </div>
+</header>

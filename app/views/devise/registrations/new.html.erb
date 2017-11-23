@@ -1,0 +1,63 @@
+<h2>Sign up</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %><br />
+    <%= f.password_field :password, autocomplete: "off" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "off" %>
+  </div>
+  <div class="row">
+    <% if @secret_codes.present? %>
+      <div class="col-xs-12 col-sm-3">
+        <table class="table">
+          <thead>
+            <tr>
+                <th>Code</th>
+              </tr>
+          </thead>
+
+          <tbody>
+            <% @secret_codes.each do |scode| %>
+              <% if !scode.user_id.present? %>
+                <tr class='success'>
+                  <td id = "secret_source"><%= scode.code %></td>
+                </tr>
+              <% end %>  
+            <% end %>
+          </tbody>
+        </table>
+      </div>  
+    <% else %>  
+      <div class="field">
+        <p>No Codes available please contact admin</p>
+      </div>
+    <% end %>  
+  </div>
+
+
+  <div class="field">
+    <%= f.label :enter_any_one_code %><br />
+    <%= f.text_field :secret_code, onkeyup: "validate_secretcode()" %>
+  </div>
+
+
+  <div class="actions">
+    <%= f.submit "Sign up", disabled: "disabled", id: "submit_user_reg" %>
+  </div>
+<% end %>
+
+<%= render "devise/shared/links" %>
